@@ -103,8 +103,8 @@ static NSMutableArray *noneSelClassStringPrefixs;
     
     NSMethodSignature *ms = [self avoidCrashMethodSignatureForSelector:aSelector];
     
-    BOOL flag = NO;
     if (ms == nil) {
+        BOOL flag = NO;
         for (NSString *classStr in noneSelClassStrings) {
             if ([self isKindOfClass:NSClassFromString(classStr)]) {
                 ms = [AvoidCrashStubProxy instanceMethodSignatureForSelector:@selector(proxyMethod)];
@@ -112,12 +112,12 @@ static NSMutableArray *noneSelClassStringPrefixs;
                 break;
             }
         }
-    }
-    if (flag == NO) {
-        NSString *selfClass = NSStringFromClass([self class]);
-        for (NSString *classStrPrefix in noneSelClassStringPrefixs) {
-            if ([selfClass hasPrefix:classStrPrefix]) {
-                ms = [AvoidCrashStubProxy instanceMethodSignatureForSelector:@selector(proxyMethod)];
+        if (flag == NO) {
+            NSString *selfClass = NSStringFromClass([self class]);
+            for (NSString *classStrPrefix in noneSelClassStringPrefixs) {
+                if ([selfClass hasPrefix:classStrPrefix]) {
+                    ms = [AvoidCrashStubProxy instanceMethodSignatureForSelector:@selector(proxyMethod)];
+                }
             }
         }
     }
